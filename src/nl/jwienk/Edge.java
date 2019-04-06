@@ -11,11 +11,11 @@ public class Edge implements Comparable<Edge> {
   }
 
   public Node getToNode() {
-    return toNode;
+    return this.toNode;
   }
 
   public Color getColor() {
-    return color;
+    return this.color;
   }
 
   @Override

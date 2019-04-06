@@ -1,4 +1,4 @@
-package nj.jwienk;
+package nl.jwienk;
 
 import static org.junit.Assert.*;
 

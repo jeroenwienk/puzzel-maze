@@ -3,9 +3,7 @@ package nl.jwienk;
 
 import nl.jwienk.utils.Helpers;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
 
@@ -60,80 +58,88 @@ public class Main {
     graph.addNode(twentytwo);
     graph.addNode(twentythree);
 
-    graph.addEdge(one, new Edge(four, Color.PURPLE));
-    graph.addEdge(one, new Edge(five, Color.BLACK));
+    graph.addEdge(one, four, Color.PURPLE);
+    graph.addEdge(one, five, Color.BLACK);
 
-    graph.addEdge(two, new Edge(six, Color.GREEN));
-    graph.addEdge(two, new Edge(twelve, Color.PURPLE));
+    graph.addEdge(two, six, Color.GREEN);
+    graph.addEdge(two, twelve, Color.PURPLE);
 
-    graph.addEdge(three, new Edge(one, Color.ORANGE));
-    graph.addEdge(three, new Edge(four, Color.ORANGE));
+    graph.addEdge(three, one, Color.ORANGE);
+    graph.addEdge(three, four, Color.ORANGE);
 
-    graph.addEdge(four, new Edge(thirtheen, Color.BLACK));
+    graph.addEdge(four, thirtheen, Color.BLACK);
 
-    graph.addEdge(five, new Edge(nine, Color.ORANGE));
+    graph.addEdge(five, nine, Color.ORANGE);
 
-    graph.addEdge(six, new Edge(nine, Color.GREEN));
-    graph.addEdge(six, new Edge(ten, Color.PURPLE));
+    graph.addEdge(six, nine, Color.GREEN);
+    graph.addEdge(six, ten, Color.PURPLE);
 
-    graph.addEdge(seven, new Edge(two, Color.GREEN));
+    graph.addEdge(seven, two, Color.GREEN);
 
-    graph.addEdge(eight, new Edge(three, Color.PURPLE));
+    graph.addEdge(eight, three, Color.PURPLE);
 
-    graph.addEdge(nine, new Edge(four, Color.GREEN));
-    graph.addEdge(nine, new Edge(fourteen, Color.BLACK));
+    graph.addEdge(nine, four, Color.GREEN);
+    graph.addEdge(nine, fourteen, Color.BLACK);
 
-    graph.addEdge(ten, new Edge(fifteen, Color.GREEN));
+    graph.addEdge(ten, fifteen, Color.GREEN);
 
-    graph.addEdge(eleven, new Edge(twelve, Color.GREEN));
-    graph.addEdge(eleven, new Edge(ten, Color.PURPLE));
+    graph.addEdge(eleven, twelve, Color.GREEN);
+    graph.addEdge(eleven, ten, Color.PURPLE);
 
-    graph.addEdge(twelve, new Edge(seven, Color.GREEN));
+    graph.addEdge(twelve, seven, Color.GREEN);
 
-    graph.addEdge(thirtheen, new Edge(eighteen, Color.GREEN));
-    graph.addEdge(thirtheen, new Edge(eight, Color.GREEN));
+    graph.addEdge(thirtheen, eighteen, Color.GREEN);
+    graph.addEdge(thirtheen, eight, Color.GREEN);
 
-    graph.addEdge(fourteen, new Edge(twenty, Color.ORANGE));
-    graph.addEdge(fourteen, new Edge(twentythree, Color.GREEN));
+    graph.addEdge(fourteen, twenty, Color.ORANGE);
+    graph.addEdge(fourteen, twentythree, Color.GREEN);
 
-    graph.addEdge(fifteen, new Edge(twentytwo, Color.GREEN));
-    graph.addEdge(fifteen, new Edge(twentythree, Color.PURPLE));
+    graph.addEdge(fifteen, twentytwo, Color.GREEN);
+    graph.addEdge(fifteen, twentythree, Color.PURPLE);
 
-    graph.addEdge(sixteen, new Edge(fifteen, Color.GREEN));
+    graph.addEdge(sixteen, fifteen, Color.GREEN);
 
-    graph.addEdge(seventeen, new Edge(eleven, Color.BLACK));
-    graph.addEdge(seventeen, new Edge(twelve, Color.PURPLE));
-    graph.addEdge(seventeen, new Edge(sixteen, Color.BLACK));
+    graph.addEdge(seventeen, eleven, Color.BLACK);
+    graph.addEdge(seventeen, twelve, Color.PURPLE);
+    graph.addEdge(seventeen, sixteen, Color.BLACK);
 
-    graph.addEdge(eighteen, new Edge(nine, Color.ORANGE));
-    graph.addEdge(eighteen, new Edge(twenty, Color.ORANGE));
+    graph.addEdge(eighteen, nine, Color.ORANGE);
+    graph.addEdge(eighteen, twenty, Color.ORANGE);
 
-    graph.addEdge(nineteen, new Edge(eighteen, Color.GREEN));
+    graph.addEdge(nineteen, eighteen, Color.GREEN);
 
-    graph.addEdge(twenty, new Edge(twentyone, Color.ORANGE));
+    graph.addEdge(twenty, twentyone, Color.ORANGE);
 
-    graph.addEdge(twentyone, new Edge(twentytwo, Color.ORANGE));
-    graph.addEdge(twentyone, new Edge(twentythree, Color.BLACK));
+    graph.addEdge(twentyone, twentytwo, Color.ORANGE);
+    graph.addEdge(twentyone, twentythree, Color.BLACK);
 
-    graph.addEdge(twentytwo, new Edge(seventeen, Color.ORANGE));
+    graph.addEdge(twentytwo, seventeen, Color.ORANGE);
 
     //Helpers.printGraphVizString(graph);
 
     graph.setGoalNode(twentythree);
-    Set<State> forbiddenStates = new HashSet<>();
-    Set<State> visited = new HashSet<>();
 
-    LinkedList<State> result;
+//    Set<State> visited = new HashSet<>();
+//    LinkedList<State> result = graph.dfs(new State(one, two), visited);
+//    Helpers.printResult(result);
+//
+//    for (Map.Entry<Integer, LinkedList<State>> entry : graph.getSolutions().entrySet()) {
+//      System.out.println("Solution:" + entry.getKey());
+//      for (State s : entry.getValue()) {
+//        System.out.println(s.toString());
+//      }
+//      System.out.println("Size: " + entry.getValue().size());
+//      System.out.println();
+//    }
 
-    do {
-      visited.addAll(forbiddenStates);
-      result = graph.dfs(new State(one, two), visited);
+
+    ArrayList<LinkedList<State>> results = new ArrayList<>();
+
+    results = graph.findSolutions(new State(one, two));
+
+    for (LinkedList<State> result : results) {
       Helpers.printResult(result);
-      if (result.size() > 0) {
-        forbiddenStates.add(result.getLast());
-      }
-      visited = new HashSet<>();
-    } while (result.size() > 0);
+    }
 
   }
 }
