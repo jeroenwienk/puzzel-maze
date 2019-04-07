@@ -3,7 +3,8 @@ package nl.jwienk;
 
 import nl.jwienk.utils.Helpers;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Main {
 
@@ -115,30 +116,20 @@ public class Main {
 
     graph.addEdge(twentytwo, seventeen, Color.ORANGE);
 
-    //Helpers.printGraphVizString(graph);
+    ArrayList<LinkedList<State>> results = graph.findSolutions(new State(one, two), twentythree);
 
-    graph.setGoalNode(twentythree);
-
-//    Set<State> visited = new HashSet<>();
-//    LinkedList<State> result = graph.dfs(new State(one, two), visited);
-//    Helpers.printResult(result);
-//
-//    for (Map.Entry<Integer, LinkedList<State>> entry : graph.getSolutions().entrySet()) {
-//      System.out.println("Solution:" + entry.getKey());
-//      for (State s : entry.getValue()) {
-//        System.out.println(s.toString());
-//      }
-//      System.out.println("Size: " + entry.getValue().size());
-//      System.out.println();
-//    }
-
-
-    ArrayList<LinkedList<State>> results = new ArrayList<>();
-
-    results = graph.findSolutions(new State(one, two));
-
+    System.out.println(String.format("%-10s %s", "METHOD", "findSolutions"));
+    System.out.println(String.format("%-10s %s", "CHECKED", graph.getNrOfStatesChecked()));
     for (LinkedList<State> result : results) {
-      Helpers.printResult(result);
+      Helpers.printResult(result, false);
+    }
+
+    results = graph.findSolutionsOptimized(new State(one, two), twentythree);
+
+    System.out.println(String.format("%-10s %s", "METHOD", "findSolutionsOptimized"));
+    System.out.println(String.format("%-10s %s", "CHECKED", graph.getNrOfStatesChecked()));
+    for (LinkedList<State> result : results) {
+      Helpers.printResult(result, false);
     }
 
   }

@@ -12,6 +12,12 @@ public final class Helpers {
   private Helpers() {
   }
 
+  /**
+   * Print a graphviz string representing the current graph. This can then be used on
+   * http://www.webgraphviz.com/ to visualise the graph.
+   *
+   * @param gameGraph the graph to print
+   */
   public static void printGraphVizString(GameGraph gameGraph) {
     System.out.println("digraph {");
 
@@ -28,28 +34,56 @@ public final class Helpers {
     for (Node node : gameGraph.getNodesList()) {
 
       for (Edge edge : node.getEdges()) {
-        System.out.println("\t" + node.getIdentifier() + " -> " + edge.getToNode().getIdentifier() + " [color=" + edge.getColor() + "]");
+        System.out.println("\t" + node.getIdentifier() + " -> " +
+            edge.getToNode().getIdentifier() + " [color=" + edge.getColor() + "]");
       }
 
     }
 
     System.out.println();
     System.out.println("}");
-
   }
 
-  public static void printResult(LinkedList<State> result) {
+  /**
+   * Print the result of a list of solution states.
+   *
+   * @param result list containing the order which led to a solution.
+   */
+  public static void printResult(LinkedList<State> result, boolean largeOutput) {
     if (result.size() != 0) {
-      System.out.println(String.format("%-20s %s", "POS1", "POS2"));
-      for (State state : result) {
-        System.out.println(String.format("%-20s %s", state.getNodeOne().getIdentifier(), state.getNodeTwo().getIdentifier()));
+      if (largeOutput) {
+        System.out.println(String.format("%-10s %s", "POS1", "POS2"));
+        for (State state : result) {
+          System.out.println(String.format("%-10s %s", state.getNodeOne().getIdentifier(),
+              state.getNodeTwo().getIdentifier()));
+        }
       }
-      System.out.println(String.format("%-20s %s\n", "SIZE", result.size()));
+      System.out.println(String.format("\n%-10s %s", "SIZE", result.size()));
 
-    } else {
-      System.out.println("No more results");
+      String pathString = result.getLast().getPath() + result.getLast().toString();
+      String[] paths = pathString.split("]");
+
+      StringBuilder sb = new StringBuilder();
+
+      for (int i = 0; i < paths.length; i++) {
+        if (i == 0) {
+          sb.append(String.format("%-11s", "PATH"));
+        }
+
+        if (i % 10 == 0 && i != 0) {
+          sb.append("\n").append(String.format("%-11s", ""));
+        }
+
+        sb.append(paths[i]).append("]");
+
+      }
+
+      sb.append("\n");
+
+      System.out.println(sb.toString());
+
+      //System.out.println(String.format("%-10s %s\n", "PATH", result.getLast().getPath() + result.getLast().toString()));
     }
-
   }
 
 }
